@@ -1,7 +1,9 @@
 import azure.functions as func
- 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
- 
-@app.route(route="hello")
-def hello(req):
-  return func.HttpResponse("Hello")
+
+from week8 import app as flask_app
+
+
+app = func.WsgiFunctionApp(
+    app=flask_app.wsgi_app,
+    http_auth_level=func.AuthLevel.ANONYMOUS
+)
