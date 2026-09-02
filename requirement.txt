@@ -1,3 +1,4 @@
-azure-functions
+Flask
+flask-cors
 pyodbc
-azure-identity
+gunicorn
