@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+
+            background-color: white;
+
+            width: 350px;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 10px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+        }
+
+        button {
+
+            width: 100%;
+
+            padding: 10px;
+
+            margin-top: 20px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background-color: #007bff;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="login-container">
+
+    <h2>Login</h2>
+
+    <form id="loginForm">
+
+        <label for="username">Username</label>
+
+        <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                required
+        >
+
+
+        <label for="password">Password</label>
+
+        <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                required
+        >
+
+
+        <button type="submit">
+            Login
+        </button>
+
+
+        <div id="message"></div>
+
+    </form>
+
+</div>
+
+
+<script>
+
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document.getElementById("username").value;
+
+            const password =
+                document.getElementById("password").value;
+
+            const message =
+                document.getElementById("message");
+
+
+            try {
+
+                const response = await fetch("/login", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+
+                });
+
+
+                const data = await response.json();
+
+
+                if (response.ok) {
+
+                    message.textContent =
+                        "Login successful";
+
+                    message.className =
+                        "success";
+
+                } else {
+
+                    message.textContent =
+                        "Invalid username or password";
+
+                    message.className =
+                        "error";
+
+                }
+
+
+            } catch (error) {
+
+                message.textContent =
+                    "Unable to connect to server";
+
+                message.className =
+                    "error";
+
+            }
+
+        });
+
+</script>
+
+
+</body>
+
+</html>
